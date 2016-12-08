@@ -273,6 +273,29 @@ public class NorbironSurfaceView extends android.view.SurfaceView implements Run
            return i;
     }
 
+    public void saveOnPause() //StringBuffer sb, Integer alreadyInFile)
+    {
+        Log.d(TAG, "##save on pause");
+        FileOutputStream fos;
+        try
+        {
+            fos = getActivity().openFileOutput(storageFilename,Context.MODE_PRIVATE);
+            //for(int i=alreadyInFile;i<nodeBoxes.size();i++)
+            for(NeuronBox nb: nodeBoxes)
+            {
+             //fos.write(nodeBoxes.get(i).description().getBytes()); 
+                fos.write(nb.description().getBytes()); 
+             //Log.d(TAG,"#lementjük:# " + nodeBoxes.get(i).description());  
+                //Log.d(TAG,"#lementjük:# " + nb.description());
+            }
+            fos.close();
+        }
+        catch (IOException e)
+          {
+                e.getMessage();
+          }
+    }
+
     @Override
     public void onDraw(android.graphics.Canvas canvas) {
 
