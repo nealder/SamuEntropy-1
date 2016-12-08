@@ -232,6 +232,47 @@ public class NorbironSurfaceView extends android.view.SurfaceView implements Run
 
     }
 
+    public Integer loadOnCreate()
+    {
+        Log.d(TAG, "load on create");
+        Integer i=0;
+        if(nodeBoxes.size()==0)
+        {
+            
+            try
+            {
+                FileInputStream fis= context.openFileInput(storageFilename);
+                InputStreamReader isr= new InputStreamReader(fis);
+                BufferedReader bufferreader=new BufferedReader(isr);
+                
+                        String line;
+                        while( (line = bufferreader.readLine() ) !=null ){
+                            Log.d(TAG,line);
+                            String[] tokens=line.split(",");
+
+                            if(tokens.length!=3)
+                                return i;
+                            //sb.append(line);
+                            int type = Integer.parseInt(tokens[0]);
+                            int x = Integer.parseInt(tokens[1]);
+                            int y = Integer.parseInt(tokens[2]);
+                            NeuronBox nb= (NeuronBox) nodes.get(type).clone();
+                            nb.setXY(x,y);
+                            //nb.setType(type);
+                            nodeBoxes.add(nb);i++;
+                        }
+               }
+               catch (IOException e)
+               {
+                    e.getMessage();
+               }
+               if (i == 0) {
+            nodeBoxes.add((NeuronBox) nodes.get(0).clone());
+            }
+           }
+           return i;
+    }
+
     @Override
     public void onDraw(android.graphics.Canvas canvas) {
 
@@ -247,6 +288,8 @@ public class NorbironSurfaceView extends android.view.SurfaceView implements Run
                     canvas.drawBitmap(nodes.getBoardPic(), -startsx + boardx + i * 300, -startsy + boardy + j * 300, null);
                 }
             }
+
+            List<NeuronBox> 
 
             for (NeuronBox nb : nodeBoxes) {
                 nb.draw(-startsx, -startsy, canvas);
