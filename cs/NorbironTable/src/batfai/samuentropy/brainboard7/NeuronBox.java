@@ -62,7 +62,7 @@ public class NeuronBox implements Cloneable {
     protected boolean open = false;
     protected boolean selected = false;
 
-    private int type = 1;
+    private int type;
 
     public NeuronBox(android.graphics.Bitmap tiles, int length, int width, int height,
             int numberOfNeurons,
@@ -126,6 +126,7 @@ public class NeuronBox implements Cloneable {
     }
 
     public void setCover(boolean open) {
+        if(type!=0)
         this.open = open;
     }
 
@@ -154,6 +155,10 @@ public class NeuronBox implements Cloneable {
         this.y = (int) y;
     }
 
+    public String description(){
+        return getType() + "," + getX() + "," + getY() + "\n";
+    }
+
     public void draw(float shiftx, float shifty, android.graphics.Canvas canvas) {
 
         for (int i = 0; i < neurons.length; ++i) {
@@ -170,7 +175,7 @@ public class NeuronBox implements Cloneable {
             canvas.drawBitmap(cover, null, to, null);
         }
 
-        if (selected) {
+        if (selected && type!=0) {
 
             selectedBoxPaintSize = (selectedBoxPaintSize + 3) % 12;
             selectedBoxPaint.setStrokeWidth(1 + selectedBoxPaintSize);
