@@ -38,17 +38,48 @@
  * 0.0.1, 2013.szept.29.
  */
 package batfai.samuentropy.brainboard7;
+import android.util.Log;
 
 /**
  *
  * @author nbatfai
  */
 public class NeuronGameActivity extends android.app.Activity {
+    private static final String TAG = NeuronGameActivity.class.toString();
+    private NorbironSurfaceView sv;
+    //private StringBuffer sb;
+    //private Integer alreadySaved;
+    //private Integer alreadyInFile;
 
     @Override
     public void onCreate(android.os.Bundle savedInstanceState) {
+        Log.d(TAG, "just create");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-                
+        sv = (NorbironSurfaceView) findViewById(R.id.sv);
+        //sb=new StringBuffer();
+        //alreadySaved=alreadyInFile=sv.loadOnCreate(sb);
+        sv.loadOnCreate();
     }
+
+    @Override
+    protected void onPause()
+    {
+      super.onPause();
+      sv.saveOnPause();
+    }
+
+    /*@Override
+    protected void onResume()
+    {
+        super.onResume();
+        sv.loadOnContinue(sb);
+    }*/
+
+    /*@Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        sv.saveOnDestroy();
+    }*/
 }
